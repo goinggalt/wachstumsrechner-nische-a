@@ -57,11 +57,11 @@ test("Pfad O: Texte und Brücke zur Diagnose", () => {
   const { values } = validate(CASES_O.D.in);
   const r = calc(values);
   const o1 = output1(values, r);
-  assert.equal(o1.text, "Ihr heutiger Einstieg bringt etwa 127 zahlende Kunden pro Jahr.");
+  assert.equal(o1.text, "Heute gewinnen Sie etwa 127 zahlende Kunden pro Jahr.");
   assert.match(o1.bridge, /^Ohne wiederkehrende Einnahmen beginnt jedes Jahr bei null\./);
   const o = outputs23(values, r);
-  assert.match(o.output2, /^Ihr heutiger Pfad bringt etwa 813\.200 € pro Jahr\./);
-  assert.match(o.output3, /etwa 83 Teilnehmer an Ihren Einstiegsangeboten pro Monat, heute sind es 120 \(Faktor 0,7x\)/);
+  assert.match(o.output2, /^Wenn alles so bleibt wie heute, liegt Ihr Jahresumsatz bei etwa 813\.200 €\./);
+  assert.match(o.output3, /etwa 83 Teilnehmer an Ihren kostenlosen Angeboten pro Monat, heute sind es 120 \(Faktor 0,7x\)/);
   const e = validate(CASES_O.E.in).values;
   assert.match(outputs23(e, calc(e)).output2, /Lücke: 231\.000 €/);
 });
@@ -81,7 +81,7 @@ test("Pfad O braucht keine Mitgliedsfelder, Pfad M schon", () => {
 
 test("Fall C zeigt die Randfall-Meldung", () => {
   const { values } = validate(CASES.C.in);
-  assert.equal(outputs23(values, calc(values)).output3, "Ihr Ziel wird bereits von anderen Wegen getragen.");
+  assert.equal(outputs23(values, calc(values)).output3, "Ihr Ziel erreichen Sie bereits über andere Wege.");
 });
 
 test("Deutsches Zahlenformat in den Texten", () => {
@@ -91,7 +91,7 @@ test("Deutsches Zahlenformat in den Texten", () => {
   assert.match(o.output3, /Faktor 4,1x/);
   assert.match(o.output2, /Lücke: 140\.200 €/);
   const b = validate(CASES.B.in).values;
-  assert.match(outputs23(b, calc(b)).output2, /91\.400 € über dem Ziel/);
+  assert.match(outputs23(b, calc(b)).output2, /91\.400 € über Ihrem Ziel/);
 });
 
 const post = (body) => new Request("https://x.test/api", { method: "POST", body: JSON.stringify(body) });

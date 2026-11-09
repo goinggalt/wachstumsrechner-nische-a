@@ -93,7 +93,7 @@ export function output1(v, r) {
     const n = Math.round(r.customers_year);
     return {
       path: "O",
-      text: `Ihr heutiger Einstieg bringt etwa ${nf0.format(n)} zahlende Kunden pro Jahr.`,
+      text: `Heute gewinnen Sie etwa ${nf0.format(n)} zahlende Kunden pro Jahr.`,
       customers_year: n,
       shrinking: false,
       bridge: BRIDGE_O,
@@ -110,20 +110,20 @@ export function output1(v, r) {
 
 export function outputs23(v, r) {
   const lead = r.path === "M"
-    ? `Ihr heutiger Pfad trägt dauerhaft etwa ${eur(r.revenue)} pro Jahr.`
-    : `Ihr heutiger Pfad bringt etwa ${eur(r.revenue)} pro Jahr.`;
+    ? `Wenn alles so bleibt wie heute, pendelt sich Ihr Jahresumsatz bei etwa ${eur(r.revenue)} ein.`
+    : `Wenn alles so bleibt wie heute, liegt Ihr Jahresumsatz bei etwa ${eur(r.revenue)}.`;
   const o2 = r.gap < 0
     ? `${lead} Ihr Ziel: ${eur(v.target)}. Lücke: ${eur(-r.gap)}.`
-    : `${lead} Ihr Ziel: ${eur(v.target)}. Der Pfad liegt ${eur(r.gap)} über dem Ziel.`;
+    : `${lead} Ihr Ziel: ${eur(v.target)}. Sie liegen ${eur(r.gap)} über Ihrem Ziel.`;
   let o3;
   if (r.needed_att === null) {
-    o3 = "Ohne Conversion vom Einstiegsangebot zum zahlenden Kunden lässt sich der Bedarf an Teilnehmern nicht berechnen.";
+    o3 = "Ohne Kunden aus Ihrem kostenlosen Angebot lässt sich der Bedarf an Teilnehmern nicht berechnen.";
   } else if (r.needed_att <= 0) {
-    o3 = "Ihr Ziel wird bereits von anderen Wegen getragen.";
+    o3 = "Ihr Ziel erreichen Sie bereits über andere Wege.";
   } else if (r.factor === null) {
-    o3 = `Für Ihr Ziel bräuchten Sie etwa ${nf0.format(Math.round(r.needed_att))} Teilnehmer an Ihren Einstiegsangeboten pro Monat, heute sind es 0.`;
+    o3 = `Für Ihr Ziel bräuchten Sie etwa ${nf0.format(Math.round(r.needed_att))} Teilnehmer an Ihren kostenlosen Angeboten pro Monat, heute sind es 0.`;
   } else {
-    o3 = `Für Ihr Ziel bräuchten Sie etwa ${nf0.format(Math.round(r.needed_att))} Teilnehmer an Ihren Einstiegsangeboten pro Monat, heute sind es ${nf0.format(Math.round(r.attendees))} (Faktor ${nf1.format(r.factor)}x).`;
+    o3 = `Für Ihr Ziel bräuchten Sie etwa ${nf0.format(Math.round(r.needed_att))} Teilnehmer an Ihren kostenlosen Angeboten pro Monat, heute sind es ${nf0.format(Math.round(r.attendees))} (Faktor ${nf1.format(r.factor)}x).`;
   }
   const out = {
     output2: o2,
