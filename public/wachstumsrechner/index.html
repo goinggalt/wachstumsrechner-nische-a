@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wachstumsrechner für Coaching- und Trainingsanbieter | Tobias Schnellbächer</title>
+<meta name="description" content="In zwei Minuten sehen, ob Ihr heutiger Wachstumspfad Ihr Umsatzziel tragen kann: Umsatzlücke und benötigte Teilnehmer an Ihren Einstiegsangeboten.">
+<style>
+  :root { --ink:#1b2430; --muted:#5b6675; --line:#d9dee5; --bg:#f7f8fa; --accent:#1f3864; --accent2:#2f5aa8; --warn:#9a3412; --ok:#166534; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family: Arial, Helvetica, sans-serif; color:var(--ink); background:#fff; line-height:1.5; }
+  main { max-width:760px; margin:0 auto; padding:32px 20px 64px; }
+  h1 { font-size:1.9rem; line-height:1.2; margin:0 0 12px; }
+  h2 { font-size:1.25rem; margin:32px 0 12px; }
+  p.lead { font-size:1.08rem; color:var(--muted); margin:0 0 24px; }
+  fieldset { border:1px solid var(--line); border-radius:8px; padding:16px 18px 6px; margin:0 0 16px; }
+  legend { font-weight:bold; padding:0 6px; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:4px 18px; }
+  @media (max-width:620px){ .grid { grid-template-columns:1fr; } }
+  label { display:block; font-size:.92rem; margin:6px 0 4px; }
+  .field { margin-bottom:10px; }
+  .inp { display:flex; align-items:center; border:1px solid var(--line); border-radius:6px; background:#fff; }
+  .inp input { flex:1; border:0; padding:9px 10px; font-size:1rem; min-width:0; background:transparent; }
+  .inp span { padding:0 10px; color:var(--muted); font-size:.92rem; }
+  .inp:focus-within { border-color:var(--accent2); outline:2px solid #dbe6fb; }
+  .err { color:var(--warn); font-size:.85rem; min-height:1em; }
+  button { font:inherit; cursor:pointer; border:0; border-radius:6px; padding:12px 18px; font-weight:bold; }
+  .primary { background:var(--accent); color:#fff; }
+  .primary:disabled { opacity:.6; cursor:wait; }
+  .result { background:var(--bg); border-left:4px solid var(--accent2); border-radius:6px; padding:14px 16px; margin:16px 0; font-size:1.05rem; }
+  .result.warn { border-left-color:var(--warn); }
+  .gate { border:1px solid var(--line); border-radius:8px; padding:18px; margin-top:20px; }
+  .check { display:flex; gap:10px; align-items:flex-start; font-size:.9rem; margin:10px 0; }
+  .check input { margin-top:4px; }
+  .radios { display:flex; gap:24px; margin:4px 0 6px; }
+  .radio { display:flex; gap:8px; align-items:center; font-size:1rem; margin:0; }
+  .bridge { color:var(--muted); margin:-6px 0 16px; }
+  .hp { position:absolute; left:-10000px; width:1px; height:1px; overflow:hidden; }
+  .note { font-size:.82rem; color:var(--muted); margin-top:24px; }
+  .cta { background:var(--bg); border-radius:8px; padding:20px; margin-top:28px; }
+  .cta a.button { display:inline-block; background:var(--accent); color:#fff; text-decoration:none; padding:12px 18px; border-radius:6px; font-weight:bold; margin-top:8px; }
+  [hidden] { display:none !important; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Trägt Ihr heutiger Wachstumspfad Ihr Umsatzziel?</h1>
+  <p class="lead">Für Coaching- und Trainingsanbieter mit E-Mail-Liste und kostenlosem Einstiegsangebot, mit oder ohne Mitgliedschaft. Wenige Zahlen, zwei Minuten: Sie sehen, was Ihr heutiger Pfad trägt, wie groß die Lücke zu Ihrem Ziel ist und wie viele Teilnehmer Sie dafür bräuchten.</p>
+
+  <form id="calc" novalidate>
+    <fieldset>
+      <legend>Haben Sie heute eine Mitgliedschaft oder ein Abo?</legend>
+      <div class="radios">
+        <label class="radio"><input type="radio" name="has_membership" value="ja"> Ja</label>
+        <label class="radio"><input type="radio" name="has_membership" value="nein"> Nein</label>
+      </div>
+      <div class="err" data-for="has_membership"></div>
+    </fieldset>
+    <fieldset>
+      <legend>Ziel und Umsatz</legend>
+      <div class="grid">
+        <div class="field"><label for="target">Ziel-Jahresumsatz (netto)</label><div class="inp"><input id="target" name="target" inputmode="decimal" value="300000"><span>€</span></div><div class="err" data-for="target"></div></div>
+        <div class="field"><label for="other_rev">Sonstiger Jahresumsatz: alles, was nicht über den Einstieg unten kommt</label><div class="inp"><input id="other_rev" name="other_rev" inputmode="decimal" value="75000"><span>€</span></div><div class="err" data-for="other_rev"></div></div>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Wachstumspfad</legend>
+      <div class="grid">
+        <div class="field"><label for="list">E-Mail-Liste: aktive Kontakte</label><div class="inp"><input id="list" name="list" inputmode="numeric" value="4000"></div><div class="err" data-for="list"></div></div>
+        <div class="field"><label for="events">Kostenlose Einstiegsangebote pro Monat (Live-Event, Infoabend, Webinar oder Gratis-Leitfaden-Aktion)</label><div class="inp"><input id="events" name="events" inputmode="decimal" value="2"></div><div class="err" data-for="events"></div></div>
+        <div class="field"><label for="reg">Anmeldequote aus der Liste pro Angebot</label><div class="inp"><input id="reg" name="reg" inputmode="decimal" value="3"><span>%</span></div><div class="err" data-for="reg"></div></div>
+        <div class="field"><label for="show">Teilnahmequote; bei einem Gratis-Leitfaden: Anteil, der ihn tatsächlich öffnet</label><div class="inp"><input id="show" name="show" inputmode="decimal" value="35"><span>%</span></div><div class="err" data-for="show"></div></div>
+        <div class="field"><label for="e2m">Conversion Einstieg → zahlender Kunde</label><div class="inp"><input id="e2m" name="e2m" inputmode="decimal" value="4"><span>%</span></div><div class="err" data-for="e2m"></div></div>
+        <div class="field"><label for="other_new">Neue zahlende Kunden pro Monat aus anderen Wegen</label><div class="inp"><input id="other_new" name="other_new" inputmode="decimal" value="3"></div><div class="err" data-for="other_new"></div></div>
+      </div>
+    </fieldset>
+    <fieldset id="fs_m" hidden>
+      <legend>Mitgliedschaft</legend>
+      <div class="grid">
+        <div class="field"><label for="price">Durchschnittlicher Mitgliedspreis pro Monat</label><div class="inp"><input id="price" name="price" inputmode="decimal" value="60"><span>€</span></div><div class="err" data-for="price"></div></div>
+        <div class="field"><label for="churn">Kündigungsquote pro Monat</label><div class="inp"><input id="churn" name="churn" inputmode="decimal" value="5,4"><span>%</span></div><div class="err" data-for="churn"></div></div>
+        <div class="field"><label for="members">Mitglieder heute</label><div class="inp"><input id="members" name="members" inputmode="numeric" value="155"></div><div class="err" data-for="members"></div></div>
+      </div>
+    </fieldset>
+    <fieldset id="fs_o" hidden>
+      <legend>Hauptangebot</legend>
+      <div class="grid">
+        <div class="field"><label for="price_once">Durchschnittlicher Preis Ihres Hauptangebots (einmalig)</label><div class="inp"><input id="price_once" name="price_once" inputmode="decimal" value="2500"><span>€</span></div><div class="err" data-for="price_once"></div></div>
+      </div>
+    </fieldset>
+    <button class="primary" type="submit" id="btn1">Ergebnis berechnen</button>
+    <div class="err" data-for="_form"></div>
+  </form>
+
+  <div id="out1" class="result" hidden></div>
+  <p id="bridge" class="bridge" hidden></p>
+
+  <form id="gate" class="gate" hidden novalidate>
+    <p><strong>Wie groß ist die Lücke zu Ihrem Ziel, und wie viele Teilnehmer bräuchten Sie dafür?</strong> Ergebnis anzeigen und per E-Mail erhalten.</p>
+    <label for="email">E-Mail-Adresse</label>
+    <div class="inp"><input id="email" name="email" type="email" autocomplete="email"></div>
+    <div class="err" data-for="email"></div>
+    <div class="hp" aria-hidden="true"><label for="website">Website</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
+    <div class="check"><input id="consent_result" type="checkbox"><label for="consent_result" id="consent_text"></label></div>
+    <div class="err" data-for="consent_result"></div>
+    <div class="check"><input id="newsletter" type="checkbox"><label for="newsletter" id="newsletter_text"></label></div>
+    <button class="primary" type="submit" id="btn2">Ergebnis anzeigen</button>
+  </form>
+
+  <div id="out23" hidden>
+    <div id="out2" class="result"></div>
+    <div id="out3" class="result"></div>
+    <p id="mailnote" class="note"></p>
+  </div>
+
+  <div class="cta" id="cta" hidden>
+    <p>Welcher Hebel Ihre Lücke am stärksten schließt und ob Ihre Zahlen überhaupt gemessen werden, zeigt die Wachstumsdiagnose. Im kostenlosen Blueprint-Gespräch schauen wir gemeinsam auf Ihre Zahlen.</p>
+    <a class="button" id="calendly" href="#" target="_blank" rel="noopener">Kostenloses Blueprint-Gespräch buchen</a>
+  </div>
+
+  <p class="note">Vereinfachtes Modell. Ohne Mitgliedschaft: ein Hauptangebot als Einmalkauf zum Durchschnittspreis. Mit Mitgliedschaft: eine Mitgliedschaftsstufe mit Durchschnittspreis und durchschnittlicher Kündigungsquote; Kurskäufe und Aufstieg vom Kurs in die Mitgliedschaft nicht einzeln gerechnet; Kurs- und Eventumsatz als fester Betrag; keine Kapazitätsgrenzen; Gleichgewicht bei heutiger Listengröße. Die Berechnung ist eine Modellrechnung, keine Prognose oder Zusage.</p>
+</main>
+
+<script>
+// ---- Einstellungen (vor dem Livegang ausfüllen) ----
+const CONFIG = {
+  CALENDLY_URL: "https://calendly.com/IHR-LINK",          // bestehender Calendly-Link
+  PRIVACY_URL: "/datenschutz/",                            // Datenschutzerklärung
+  CONSENT_TEXT: "Ich möchte das Ergebnis per E-Mail von Tobias Schnellbächer erhalten. Meine Angaben werden nur dafür und für eine Rückfrage zu diesem Ergebnis verwendet. Details in der <a href=\"{PRIVACY}\" target=\"_blank\" rel=\"noopener\">Datenschutzerklärung</a>.",
+  NEWSLETTER_TEXT: "Optional: Ich möchte zusätzlich den Newsletter erhalten (Bestätigung per E-Mail, jederzeit abbestellbar).",
+};
+// -----------------------------------------------------
+
+const SHARED = ["target","other_rev","list","events","reg","show","e2m","other_new"];
+const PATH_FIELDS = { M: ["price","churn","members"], O: ["price_once"] };
+const PERCENT = ["reg","show","e2m","churn"];
+const $ = (id) => document.getElementById(id);
+$("consent_text").innerHTML = CONFIG.CONSENT_TEXT.replace("{PRIVACY}", CONFIG.PRIVACY_URL);
+$("newsletter_text").textContent = CONFIG.NEWSLETTER_TEXT;
+$("calendly").href = CONFIG.CALENDLY_URL;
+
+const track = (event) => { try { navigator.sendBeacon("/api/track", new Blob([JSON.stringify({ event })], { type: "application/json" })); } catch (e) {} };
+let started = false;
+document.querySelectorAll("#calc input").forEach((el) => el.addEventListener("input", () => { if (!started) { started = true; track("calc_started"); } }));
+$("calendly").addEventListener("click", () => track("calendly_click"));
+
+// "300.000" and "300000" -> 300000; "5,4" and "5.4" -> 5.4
+function num(v) {
+  let s = String(v).trim().replace(/\s|€|%/g, "");
+  if (s.includes(",")) s = s.replace(/\./g, "").replace(",", ".");
+  else if (/^\d{1,3}(\.\d{3})+$/.test(s)) s = s.replace(/\./g, "");
+  return s === "" ? NaN : Number(s);
+}
+function path() { const r = document.querySelector('input[name="has_membership"]:checked'); return r ? (r.value === "ja" ? "M" : "O") : null; }
+function fields(p) { return SHARED.concat(PATH_FIELDS[p] || []); }
+function inputs() { const p = path(); const o = { has_membership: p === "M" }; fields(p).forEach((k) => o[k] = num($(k).value)); return o; }
+document.querySelectorAll('input[name="has_membership"]').forEach((el) => el.addEventListener("change", () => {
+  const p = path();
+  $("fs_m").hidden = p !== "M"; $("fs_o").hidden = p !== "O";
+  ["out1","bridge","gate","out23","cta"].forEach((id) => $(id).hidden = true);
+  showErrors();
+}));
+
+function showErrors(errors = {}) {
+  document.querySelectorAll(".err").forEach((el) => el.textContent = errors[el.dataset.for] || "");
+}
+function localCheck(v) {
+  const e = {};
+  const p = path();
+  if (!p) { e.has_membership = "Bitte wählen Sie Ja oder Nein."; return e; }
+  for (const k of fields(p)) {
+    if (!Number.isFinite(v[k])) e[k] = "Bitte eine Zahl eingeben.";
+    else if (v[k] < 0) e[k] = "Der Wert darf nicht negativ sein.";
+    else if (PERCENT.includes(k) && v[k] > 100) e[k] = "Bitte einen Prozentwert zwischen 0 und 100 eingeben.";
+  }
+  if (p === "M" && !e.churn && v.churn <= 0) e.churn = "Die Kündigungsquote muss größer als 0 sein.";
+  return e;
+}
+async function post(url, body) {
+  const res = await fetch(url, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+  const data = await res.json().catch(() => ({}));
+  return { ok: res.ok, data };
+}
+
+let lastInputs = null;
+$("calc").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const v = inputs(); const e = localCheck(v); showErrors(e);
+  if (Object.keys(e).length) return;
+  $("btn1").disabled = true;
+  try {
+    const { ok, data } = await post("/api/calc", { inputs: v });
+    if (!ok) { showErrors(data.errors || { _form: "Die Berechnung ist gerade nicht möglich. Bitte später erneut versuchen." }); return; }
+    lastInputs = v;
+    $("out1").textContent = data.output1.text;
+    $("out1").classList.toggle("warn", data.output1.shrinking);
+    $("bridge").textContent = data.output1.bridge || "";
+    $("bridge").hidden = !data.output1.bridge;
+    $("out1").hidden = false; $("gate").hidden = false; $("out23").hidden = true; $("cta").hidden = false;
+  } catch (err) { showErrors({ _form: "Die Berechnung ist gerade nicht möglich. Bitte später erneut versuchen." }); }
+  finally { $("btn1").disabled = false; }
+});
+
+$("gate").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const e = {};
+  const email = $("email").value.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) e.email = "Bitte eine gültige E-Mail-Adresse eingeben.";
+  if (!$("consent_result").checked) e.consent_result = "Bitte bestätigen Sie den Versand des Ergebnisses per E-Mail.";
+  showErrors(e); if (Object.keys(e).length) return;
+  $("btn2").disabled = true;
+  try {
+    const { ok, data } = await post("/api/calc-full", {
+      inputs: lastInputs || inputs(), email, consent_result: true,
+      newsletter: $("newsletter").checked, website: $("website").value,
+    });
+    if (!ok) { showErrors(data.errors || { email: "Das hat nicht geklappt. Bitte später erneut versuchen." }); return; }
+    $("out2").textContent = data.output2;
+    $("out3").textContent = data.output3;
+    $("mailnote").textContent = data.emailSent
+      ? "Das Ergebnis ist auch per E-Mail unterwegs." + ($("newsletter").checked ? " Für den Newsletter erhalten Sie zusätzlich eine Bestätigungs-E-Mail." : "")
+      : "Die E-Mail konnte gerade nicht versendet werden. Ihr Ergebnis sehen Sie hier.";
+    $("out23").hidden = false; $("gate").hidden = true;
+  } catch (err) { showErrors({ email: "Das hat nicht geklappt. Bitte später erneut versuchen." }); }
+  finally { $("btn2").disabled = false; }
+});
+</script>
+</body>
+</html>
