@@ -44,8 +44,8 @@
 </head>
 <body>
 <main>
-  <h1>Trägt Ihr heutiger Wachstumspfad Ihr Umsatzziel?</h1>
-  <p class="lead">Für Coaching- und Trainingsanbieter mit E-Mail-Liste und kostenlosem Einstiegsangebot, mit oder ohne Mitgliedschaft. Wenige Zahlen, zwei Minuten: Sie sehen, was Ihr heutiger Pfad trägt, wie groß die Lücke zu Ihrem Ziel ist und wie viele Teilnehmer Sie dafür bräuchten.</p>
+  <h1>Erreichen Sie mit Ihrem heutigen Vorgehen Ihr Umsatzziel?</h1>
+  <p class="lead">Sie gewinnen Kunden über Ihre E-Mail-Liste und ein kostenloses Angebot, etwa ein Webinar, einen Infoabend oder einen Leitfaden? Dann sehen Sie hier in zwei Minuten, wie viel Umsatz Ihr heutiges Vorgehen pro Jahr bringt, wie weit Sie von Ihrem Ziel entfernt sind und wie viele Teilnehmer Sie bräuchten, um es zu erreichen.</p>
 
   <form id="calc" novalidate>
     <fieldset>
@@ -60,25 +60,25 @@
       <legend>Ziel und Umsatz</legend>
       <div class="grid">
         <div class="field"><label for="target">Ziel-Jahresumsatz (netto)</label><div class="inp"><input id="target" name="target" inputmode="decimal" value="300000"><span>€</span></div><div class="err" data-for="target"></div></div>
-        <div class="field"><label for="other_rev">Sonstiger Jahresumsatz: alles, was nicht über den Einstieg unten kommt</label><div class="inp"><input id="other_rev" name="other_rev" inputmode="decimal" value="75000"><span>€</span></div><div class="err" data-for="other_rev"></div></div>
+        <div class="field"><label for="other_rev" id="other_rev_label">Weiterer Jahresumsatz, der nicht aus Ihrer Mitgliedschaft kommt, z. B. Einzelcoaching, Kurse, bezahlte Events</label><div class="inp"><input id="other_rev" name="other_rev" inputmode="decimal" value="75000"><span>€</span></div><div class="err" data-for="other_rev"></div></div>
       </div>
     </fieldset>
     <fieldset>
-      <legend>Wachstumspfad</legend>
+      <legend>So gewinnen Sie heute Kunden</legend>
       <div class="grid">
-        <div class="field"><label for="list">E-Mail-Liste: aktive Kontakte</label><div class="inp"><input id="list" name="list" inputmode="numeric" value="4000"></div><div class="err" data-for="list"></div></div>
-        <div class="field"><label for="events">Kostenlose Einstiegsangebote pro Monat (Live-Event, Infoabend, Webinar oder Gratis-Leitfaden-Aktion)</label><div class="inp"><input id="events" name="events" inputmode="decimal" value="2"></div><div class="err" data-for="events"></div></div>
-        <div class="field"><label for="reg">Anmeldequote aus der Liste pro Angebot</label><div class="inp"><input id="reg" name="reg" inputmode="decimal" value="3"><span>%</span></div><div class="err" data-for="reg"></div></div>
-        <div class="field"><label for="show">Teilnahmequote; bei einem Gratis-Leitfaden: Anteil, der ihn tatsächlich öffnet</label><div class="inp"><input id="show" name="show" inputmode="decimal" value="35"><span>%</span></div><div class="err" data-for="show"></div></div>
-        <div class="field"><label for="e2m">Conversion Einstieg → zahlender Kunde</label><div class="inp"><input id="e2m" name="e2m" inputmode="decimal" value="4"><span>%</span></div><div class="err" data-for="e2m"></div></div>
-        <div class="field"><label for="other_new">Neue zahlende Kunden pro Monat aus anderen Wegen</label><div class="inp"><input id="other_new" name="other_new" inputmode="decimal" value="3"></div><div class="err" data-for="other_new"></div></div>
+        <div class="field"><label for="list">Wie viele aktive Kontakte hat Ihre E-Mail-Liste?</label><div class="inp"><input id="list" name="list" inputmode="numeric" value="4000"></div><div class="err" data-for="list"></div></div>
+        <div class="field"><label for="events">Wie oft pro Monat bieten Sie etwas Kostenloses an? (Webinar, Infoabend, Live-Event oder Gratis-Leitfaden)</label><div class="inp"><input id="events" name="events" inputmode="decimal" value="2"></div><div class="err" data-for="events"></div></div>
+        <div class="field"><label for="reg">Wie viel Prozent Ihrer Liste melden sich jeweils an?</label><div class="inp"><input id="reg" name="reg" inputmode="decimal" value="3"><span>%</span></div><div class="err" data-for="reg"></div></div>
+        <div class="field"><label for="show">Wie viel Prozent der Angemeldeten nehmen wirklich teil? (Beim Leitfaden: wie viele ihn öffnen)</label><div class="inp"><input id="show" name="show" inputmode="decimal" value="35"><span>%</span></div><div class="err" data-for="show"></div></div>
+        <div class="field"><label for="e2m">Wie viel Prozent der Teilnehmer werden zahlende Kunden?</label><div class="inp"><input id="e2m" name="e2m" inputmode="decimal" value="4"><span>%</span></div><div class="err" data-for="e2m"></div></div>
+        <div class="field"><label for="other_new">Wie viele neue zahlende Kunden kommen pro Monat auf anderem Weg dazu? (z. B. Empfehlungen)</label><div class="inp"><input id="other_new" name="other_new" inputmode="decimal" value="3"></div><div class="err" data-for="other_new"></div></div>
       </div>
     </fieldset>
     <fieldset id="fs_m" hidden>
       <legend>Mitgliedschaft</legend>
       <div class="grid">
         <div class="field"><label for="price">Durchschnittlicher Mitgliedspreis pro Monat</label><div class="inp"><input id="price" name="price" inputmode="decimal" value="60"><span>€</span></div><div class="err" data-for="price"></div></div>
-        <div class="field"><label for="churn">Kündigungsquote pro Monat</label><div class="inp"><input id="churn" name="churn" inputmode="decimal" value="5,4"><span>%</span></div><div class="err" data-for="churn"></div></div>
+        <div class="field"><label for="churn">Wie viel Prozent der Mitglieder kündigen pro Monat?</label><div class="inp"><input id="churn" name="churn" inputmode="decimal" value="5,4"><span>%</span></div><div class="err" data-for="churn"></div></div>
         <div class="field"><label for="members">Mitglieder heute</label><div class="inp"><input id="members" name="members" inputmode="numeric" value="155"></div><div class="err" data-for="members"></div></div>
       </div>
     </fieldset>
@@ -118,7 +118,7 @@
     <a class="button" id="calendly" href="#" target="_blank" rel="noopener">Kostenloses Blueprint-Gespräch buchen</a>
   </div>
 
-  <p class="note">Vereinfachtes Modell. Ohne Mitgliedschaft: ein Hauptangebot als Einmalkauf zum Durchschnittspreis. Mit Mitgliedschaft: eine Mitgliedschaftsstufe mit Durchschnittspreis und durchschnittlicher Kündigungsquote; Kurskäufe und Aufstieg vom Kurs in die Mitgliedschaft nicht einzeln gerechnet; Kurs- und Eventumsatz als fester Betrag; keine Kapazitätsgrenzen; Gleichgewicht bei heutiger Listengröße. Die Berechnung ist eine Modellrechnung, keine Prognose oder Zusage.</p>
+  <p class="note">Vereinfachte Modellrechnung, keine Prognose. Wir rechnen mit einem Durchschnittspreis, ohne Kapazitätsgrenzen und mit Ihrer heutigen Listengröße. Die genaue Rechnung mit Ihren Angeboten im Einzelnen ist Teil der Wachstumsdiagnose.</p>
 </main>
 
 <script>
@@ -157,6 +157,7 @@ function inputs() { const p = path(); const o = { has_membership: p === "M" }; f
 document.querySelectorAll('input[name="has_membership"]').forEach((el) => el.addEventListener("change", () => {
   const p = path();
   $("fs_m").hidden = p !== "M"; $("fs_o").hidden = p !== "O";
+  $("other_rev_label").textContent = "Weiterer Jahresumsatz, der nicht aus " + (p === "O" ? "Ihrem Hauptangebot" : "Ihrer Mitgliedschaft") + " kommt, z. B. Einzelcoaching, Kurse, bezahlte Events";
   ["out1","bridge","gate","out23","cta"].forEach((id) => $(id).hidden = true);
   showErrors();
 }));
