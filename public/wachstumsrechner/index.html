@@ -53,7 +53,8 @@ legend+*{clear:both}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 22px}
 @media (max-width:620px){.grid{grid-template-columns:1fr}}
 label{display:block;color:#ffffffb3;font-size:14px;line-height:1.5;margin:6px 0 6px}
-.field{margin-bottom:10px}
+.field{margin-bottom:10px;display:flex;flex-direction:column}
+.field label{flex:1 0 auto}
 .inp{display:flex;align-items:center;background:#1c1f24;border:1px solid #ffffff26;border-radius:2px}
 .inp input{flex:1;min-width:0;border:0;background:transparent;color:#fff;font:inherit;font-size:16px;padding:10px 12px}
 .inp input:focus{outline:none}
