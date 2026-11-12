@@ -58,7 +58,7 @@ test("Pfad O: Texte und Brücke zur Diagnose", () => {
   const r = calc(values);
   const o1 = output1(values, r);
   assert.equal(o1.text, "Heute gewinnen Sie etwa 127 zahlende Kunden pro Jahr.");
-  assert.match(o1.bridge, /^Ohne wiederkehrende Einnahmen beginnt jedes Jahr bei null\./);
+  assert.match(o1.bridge, /^Ohne wiederkehrende Einnahmen müssen Sie Ihren Umsatz jedes Jahr neu erzielen\./);
   const o = outputs23(values, r);
   assert.match(o.output2, /^Wenn alles so bleibt wie heute, liegt Ihr Jahresumsatz bei etwa 813\.200 €\./);
   assert.match(o.output3, /etwa 83 Teilnehmer an Ihren kostenlosen Angeboten pro Monat, heute sind es 120 \(Faktor 0,7x\)/);

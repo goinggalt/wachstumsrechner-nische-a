@@ -23,7 +23,7 @@ export const PATH_O = {
 export const fieldsFor = (path) => ({ ...SHARED, ...(path === "M" ? PATH_M : PATH_O) });
 
 export const BRIDGE_O =
-  "Ohne wiederkehrende Einnahmen beginnt jedes Jahr bei null. Ob eine Mitgliedschaft für Sie sinnvoll ist, klären wir in der Diagnose.";
+  "Ohne wiederkehrende Einnahmen müssen Sie Ihren Umsatz jedes Jahr neu erzielen. Ob eine Mitgliedschaft oder ein Abo für Sie sinnvoll ist, klären wir in der Wachstumsdiagnose.";
 
 // Upper bounds only to reject nonsense and abuse, not business rules.
 const MAX = { money: 1e9, count: 1e7, percent: 100 };
